@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <style>
+		table th {
+			text-align:left;
+			vertical-align:top;
+		}
+	</style>
+</head>
+
+<body>
+	<div style="border:1px solid black; padding:20px">
+		<table>
+			<tr>
+	            <th><img th:src="@{${profile.picture}}"/></th>
+	            <th><h3 th:inline="text">[[${profile.firstName +' '+ profile.lastName}]]</h3></th>
+	        </tr>
+	        <tr>
+	            <th>ID:</th>
+	            <td th:text="${profile.id}"></td>
+	        </tr>
+	        <tr>
+	            <th>Profile:</th>
+	            <td th:text="${profile.profile}"></td>
+	        </tr>
+	        <tr>
+	            <th>Email:</th>
+	            <td th:text="${profile.email}"></td>
+	        </tr>
+	        <tr>
+	            <th>Phone:</th>
+	            <td th:text="${profile.phone}"></td>
+	        </tr>
+	        <tr>
+	            <th>Address:</th>
+	            <td th:text="${profile.address}"></td>
+	        </tr>
+	        <tr>
+	            <th>Age:</th>
+	            <td th:text="${profile.age}"></td>
+	        </tr>
+	        <tr>
+	            <th>Balance:</th>
+	            <td th:text="${profile.balance}"></td>
+	        </tr>
+	    </table>
+	</div>
+</body>
+</html>

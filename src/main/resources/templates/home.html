@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
+	<link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
+	 
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>
+</head>
+<body>
+  <input type="text" id="name"/>
+  <button type="button" onclick="search()">Search</button>
+  <div id="jsGrid" style="margin-top: 10px"></div>
+  
+<script>
+	function search() {
+		$("#jsGrid").jsGrid("loadData", { name: $("#name").val().trim() });
+	}
+	
+	$("#name").keyup(function(event) {
+	    if (event.keyCode === 13) {
+	    	search();
+	    }
+	});
+	
+	function onRowClick(row) {
+		window.location.href = "profile/"+row.item.id;
+	}
+
+	$(document).ready(function() {
+		
+		$("#jsGrid").jsGrid({
+			height: "auto",
+	        width: "100%",
+	 
+	        sorting: true,
+	        paging: false,
+	        autoload: true,
+	 
+	        controller: {
+	            loadData: function(filter) {
+	                var d = $.Deferred();
+	                
+	                $.ajax({
+	                    url: "profiles",
+	                    dataType: "json",
+            	        data: filter
+	                }).done(function(response) {
+	                    d.resolve(response);
+	                });
+	 
+	                return d.promise();
+	            }
+	        },
+	        
+	        rowClick: function(row) { onRowClick(row) },
+	 
+	        fields: [
+	            { name: "fullName", type: "text", title: "Name", width: 150, validate: "required" },
+	            { name: "age", type: "number", title: "Age", width: 50 },
+	            { name: "active", type: "checkbox", title: "Active" },
+	            { name: "blocked", type: "checkbox", title: "Blocked", sorting: false },
+	        ]
+	    });
+	});
+</script>
+</body>
+</html>
